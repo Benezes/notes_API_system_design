@@ -1,0 +1,91 @@
+1. Describe high-level design
+    The main components of the note app system include:
+
+    - User Interface (UI): Provides an interface for users to interact with the app, including functionalities to write, save, view, edit and delete notes.
+
+    - Backend Services: Responsible for handling user requests, managing user sessions, storing and retrieving notes, and enforcing authentication.
+
+    - Data Storage: Stores user information and notes data persistently, facilitating retrieval and modification as required.
+
+    - RESTful API: Acts as an interface between the frontend UI and backend services, enabling communication and data exchange in a standardized manner.
+
+
+2. Web App UI
+    The UI should consist of:
+
+    - A text input area for writing notes. (is required)
+    
+    - A text input area for title. (is required)
+    
+    - A save button to save the entered note (requires login).
+    
+    - A list view to display saved notes (visible after login).
+    
+    - A delete button for each note in the list.
+    
+    - Login/register functionality with fields for name, email, and password.
+    
+    - Validation for login/register forms to ensure data integrity and security.
+
+
+3. Data Model
+    
+    Note:
+    - Id: int 
+    - Title: String (required)
+    - Content: String (required)
+    - User ID: Foreign key linking to the User model
+    - Created At: Datetime
+    - Updated At: Datetime
+    
+    User:
+    - Id: uuid 
+    - Name: String
+    - Password: String (hashed)
+    - Created At: Datetime
+    - Updated At: Datetime
+
+
+4. RESTful API
+    - Get User's Notes:
+        Method: GET
+        URL: /notes
+        Response: Paged List of notes belonging to the authenticated user
+
+    - Get User's Notes filtered:
+        Method: GET
+        URL: /notes?title="Title"&content="Content"
+        Response: List of notes belonging to the authenticated user filtered
+
+    - Save User Note:
+        Method: POST
+        URL: /notes
+        Request Body:
+        ```
+        {
+            "title": "Note Title",
+            "content": "Note Content"
+        }
+        ```
+        Response: Status code 201 (Created)
+
+    - Update User Note:
+        Method: PUT
+        URL: /notes/<note_id>
+        Request Body: Same as save note
+        Response: Status code 200 (OK)
+
+    - Delete User Note:
+        Method: DELETE
+        URL: /notes/<note_id>
+        Response: Status code 204 (No Content)
+
+
+5. Web Server
+    - Implementation of the RESTful API endpoints to handle note-related actions.
+    
+    - Authentication and authorization mechanisms to ensure that only authorized users can access and manipulate their notes.
+    
+    - Business logic for validating user inputs, managing sessions, and enforcing security measures.
+    
+    - Notes storage mechanism (e.g., database) to persist user notes data securely.
